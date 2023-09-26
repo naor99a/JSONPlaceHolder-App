@@ -1,7 +1,7 @@
 package ResourceClasses;
 
-import Utils.Consts;
-import Utils.APIHelper;
+import Utilities.Consts;
+import Utilities.APIHelper;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
