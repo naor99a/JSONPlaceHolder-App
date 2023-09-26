@@ -1,3 +1,5 @@
+package ResourceClasses;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -41,7 +43,7 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "Todo{" +
+        return "ResourceClasses.Todo{" +
                 "userId=" + userId +
                 ", id=" + id +
                 ", title='" + title + '\'' +

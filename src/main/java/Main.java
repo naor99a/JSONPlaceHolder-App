@@ -1,3 +1,8 @@
+import ResourceClasses.Album;
+import ResourceClasses.Todo;
+import Utils.APIHelper;
+import Utils.Consts;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,7 +16,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
         // UserTodos.getAllUsersTodos();
-        // System.out.println("All users:\t " + RESTHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users"));
+        // System.out.println("All users:\t " + RESTHelper.getResponse(Utils.Consts.JSONPlaceholder_ADDRESS + "/users"));
 
         System.out.println("For user 1:\t" + getUncompletedByUser(1));
         System.out.println("For user 5:\t" + getUncompletedByUser(5));
@@ -20,7 +25,7 @@ public class Main {
 
         for (int threshold = 40; threshold < 60; threshold+=10) {
             for (int user = 0; user < 12; user++) {
-                System.out.println("User " + user + " albums with more than " + threshold + " photos: " + getUserAlbumsBiggerThan(user, threshold));
+                System.out.println("ResourceClasses.User " + user + " albums with more than " + threshold + " photos: " + getUserAlbumsBiggerThan(user, threshold));
             }
         }
     }

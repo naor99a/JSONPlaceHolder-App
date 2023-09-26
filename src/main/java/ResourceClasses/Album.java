@@ -1,9 +1,16 @@
+package ResourceClasses;
+
+import Utils.Consts;
+import Utils.APIHelper;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Album {
     private int userId;
     private int id;

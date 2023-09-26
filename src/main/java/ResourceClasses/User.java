@@ -1,10 +1,12 @@
-// Define a User class that matches the JSON structure
+package ResourceClasses;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 class User {
     private int id;
     private String name;
     private String username;
-
-    // Getters and setters for the fields
 
     public int getId() {
         return id;

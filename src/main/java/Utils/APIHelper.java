@@ -1,12 +1,14 @@
+package Utils;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
 public class APIHelper {
-    static final int SUCCESS = 200;
+    public static final int SUCCESS = 200;
 
-    static public String getResponse(String urlStr) {
+    public static String getResponse(String urlStr) {
         String responseStr = null;
         try {
             URL url = new URL(urlStr);
