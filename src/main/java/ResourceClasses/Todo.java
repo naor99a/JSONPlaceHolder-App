@@ -51,11 +51,6 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "ResourceClasses.Todo{" +
-                "userId=" + userId +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", completed=" + completed +
-                '}';
+        return "Task #"+id+": "+"\'"+title+"\'";
     }
 }
