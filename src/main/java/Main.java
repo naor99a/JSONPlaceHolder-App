@@ -31,7 +31,7 @@ public class Main {
         // Create an instance of ObjectMapper from Jackson
         ObjectMapper objectMapper = new ObjectMapper();
 
-        String jsonArrayStr = RESTHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "todos");
+        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "todos");
 
         List<Todo> userTodos = null;
         try {
@@ -49,7 +49,7 @@ public class Main {
 
         String urlStr = Consts.JSONPlaceholder_ADDRESS + "/users/" + userId + "/albums";
 
-        String albumsJsonArrayStr = RESTHelper.getResponse(urlStr);
+        String albumsJsonArrayStr = APIHelper.getResponse(urlStr);
         List<Album> userAlbums = null;
         try {
             userAlbums = objectMapper.readValue(albumsJsonArrayStr, new TypeReference<List<Album>>() {});
