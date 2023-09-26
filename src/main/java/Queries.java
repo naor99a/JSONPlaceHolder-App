@@ -1,6 +1,4 @@
-import ResourceClasses.Album;
-import ResourceClasses.Todo;
-import ResourceClasses.User;
+import ResourceClasses.*;
 import Utilities.APIHelper;
 import Utilities.Consts;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,9 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Queries {
@@ -62,8 +58,71 @@ public class Queries {
 
     // Method 3 ("Create a method that returns the summary for each user, the email of each replier (in a comment) per
     //            each post that the user has posted. If the post had 0 replies, do not show it.")
+    public static Collection<String> getRepliersByUserPosts() {
 
+        //Collection<User> users =
+        return getUsers().stream()
+                .map(user -> user.getPostsSummary())
+                .collect(Collectors.toList());
+    }
 
+/*
+    public static Collection<String> getPostRepliesSummaryForUser(int userId) {
+        Collection<Post> userPosts = getPostsOfUser(userId);
+        String emails;
+        for (Post post : userPosts) {
+            Collection<Comment> comments = getCommentsOnPost(post.getId());
+            if (comments.isEmpty()) continue;
+            StringBuilder repliersEmails = new StringBuilder();
+            emails = comments.stream()
+                    .map(comment -> comment.getEmail())
+                    .collect(Collectors.joining(", "));
+            System.out.println("Post #" + post.getId() + ": " + emails);
+        }
+        return null;
+    }
+
+    */
+    /*
+    public static String getPostRepliersSummary(int postId) {
+        Collection<Comment> comments = getCommentsOnPost(postId);
+        if (comments.isEmpty()) return null;
+
+        StringBuilder repliersEmails = new StringBuilder();
+        String emails = comments.stream()
+                .map(comment -> comment.getEmail())
+                .collect(Collectors.joining(", "));
+        return "Post #" + postId + ": " + emails;
+    }*/
+    /*
+    public static Collection<Post> getPostsOfUser(int userId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "posts");
+
+        List<Post> userPosts = null;
+        try {
+            userPosts = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Post>>() {});
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return userPosts;
+    }
+    */
+/*
+
+    public static Collection<Comment> getCommentsOnPost(int postId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/posts" + "/" + postId + "/" + "comments");
+
+        List<Comment> comments = null;
+        try {
+            comments = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Comment>>() {});
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+*/
 
     // Method 4 ("Create a method that returns all albums of a specific user that contains more photos than a given threshold")
     public static Collection<Album> getExceedingAlbumsByUser(int userId, int threshold) {
@@ -86,7 +145,6 @@ public class Queries {
 
 
 
-    // Method 1 ("Create a method that returns the summary for each user, his/her uncompleted tasks (todos)")
     public static Collection<User> getUsers() {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users");
@@ -111,9 +169,13 @@ public class Queries {
 
     */
         // System.out.println(getUncompletedByUser(10));
+/*
         for (String s : getTaskSummariesByUser()) {
             System.out.println(s);
         }
+*/
+
+        System.out.println(getRepliersByUserPosts());
 
     }
 
