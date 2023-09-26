@@ -10,13 +10,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Queries {
-
-
     // Method 1 ("Create a method that returns the summary for each user, his/her uncompleted tasks (todos)")
     public static Collection<String> getTaskSummariesByUser() {
 
         // get all users
-        Collection<User> users = getUsers();
+        Collection<User> users = getAllUsers();
 
         List<String> summaries = new ArrayList<>();
         for (User user : users) {
@@ -31,9 +29,9 @@ public class Queries {
 
     private static String getUserUncompletedTasksSummary(int userId) {
         StringBuilder taskSummary = new StringBuilder();
-        getUncompletedByUser(userId).stream().
+        getUncompletedByUser(userId).
                 forEach(task ->
-                        taskSummary.append("\t" + task +"\n"));
+                        taskSummary.append("\t").append(task).append("\n"));
         return taskSummary.toString();
     }
 
@@ -44,85 +42,43 @@ public class Queries {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "todos");
 
+        // get all user's Todos
         List<Todo> userTodos = null;
         try {
             userTodos = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Todo>>() {});
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        // filter and return only uncompleted
         return userTodos.stream()
                 .filter(todo -> !todo.isCompleted())
                 .collect(Collectors.toList());
     }
+    /*
+    private static Collection<Todo> getTodosForUser(int userId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "todos");
+
+        // get all user's Todos
+        List<Todo> userTodos = null;
+        try {
+            userTodos = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Todo>>() {});
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return userTodos;
+    }*/
 
 
     // Method 3 ("Create a method that returns the summary for each user, the email of each replier (in a comment) per
     //            each post that the user has posted. If the post had 0 replies, do not show it.")
     public static Collection<String> getRepliersByUserPosts() {
-
-        //Collection<User> users =
-        return getUsers().stream()
-                .map(user -> user.getPostsSummary())
+        return getAllUsers().stream()
+                .map(User::getPostsSummary)
                 .collect(Collectors.toList());
     }
 
-/*
-    public static Collection<String> getPostRepliesSummaryForUser(int userId) {
-        Collection<Post> userPosts = getPostsOfUser(userId);
-        String emails;
-        for (Post post : userPosts) {
-            Collection<Comment> comments = getCommentsOnPost(post.getId());
-            if (comments.isEmpty()) continue;
-            StringBuilder repliersEmails = new StringBuilder();
-            emails = comments.stream()
-                    .map(comment -> comment.getEmail())
-                    .collect(Collectors.joining(", "));
-            System.out.println("Post #" + post.getId() + ": " + emails);
-        }
-        return null;
-    }
-
-    */
-    /*
-    public static String getPostRepliersSummary(int postId) {
-        Collection<Comment> comments = getCommentsOnPost(postId);
-        if (comments.isEmpty()) return null;
-
-        StringBuilder repliersEmails = new StringBuilder();
-        String emails = comments.stream()
-                .map(comment -> comment.getEmail())
-                .collect(Collectors.joining(", "));
-        return "Post #" + postId + ": " + emails;
-    }*/
-    /*
-    public static Collection<Post> getPostsOfUser(int userId) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users" + "/" + userId + "/" + "posts");
-
-        List<Post> userPosts = null;
-        try {
-            userPosts = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Post>>() {});
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return userPosts;
-    }
-    */
-/*
-
-    public static Collection<Comment> getCommentsOnPost(int postId) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/posts" + "/" + postId + "/" + "comments");
-
-        List<Comment> comments = null;
-        try {
-            comments = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Comment>>() {});
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return comments;
-    }
-*/
 
     // Method 4 ("Create a method that returns all albums of a specific user that contains more photos than a given threshold")
     public static Collection<Album> getExceedingAlbumsByUser(int userId, int threshold) {
@@ -143,9 +99,7 @@ public class Queries {
                 .collect(Collectors.toList());
     }
 
-
-
-    public static Collection<User> getUsers() {
+    private static Collection<User> getAllUsers() {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users");
 
@@ -161,21 +115,22 @@ public class Queries {
 
     public static void main(String[] args) {
 
-    /*
-        for (Todo t : getUncompletedByUser(10)) {
-            System.out.println(t);
-            System.out.println(t.isCompleted());
-        }
+        // Printing outputs for each method
 
-    */
-        // System.out.println(getUncompletedByUser(10));
-/*
-        for (String s : getTaskSummariesByUser()) {
-            System.out.println(s);
-        }
-*/
+        // Method 1
+        System.out.println("===================== Method 1 =====================");
+        System.out.println(getTaskSummariesByUser());
 
+        System.out.println("===================== Method 2 =====================");
+        System.out.println(getUncompletedByUser(1));
+
+        System.out.println("===================== Method 3 =====================");
         System.out.println(getRepliersByUserPosts());
+
+        System.out.println("===================== Method 4 =====================");
+        System.out.println(getExceedingAlbumsByUser(1, 30));
+
+        System.out.println(getRepliersByUserPosts().stream().collect(Collectors.joining("\n\n")));
 
     }
 
