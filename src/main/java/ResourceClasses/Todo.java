@@ -43,6 +43,6 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "Task #"+id+": "+"\'"+title+"\'";
+        return "Task #"+ id +": "+"\'"+ title +"\'";
     }
 }

@@ -55,7 +55,7 @@ public class Post {
 
     public Collection<Comment> getComments() {
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/posts/" + this.id + "/comments");
+        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/posts/" + getId() + "/comments");
 
         List<Comment> comments = null;
         try {
@@ -67,13 +67,13 @@ public class Post {
     }
 
     public String getPostRepliersSummary() {
-        Collection<String> postsSummaries = new ArrayList<>();
         Collection<Comment> comments = getComments();
         if (comments.isEmpty()) return null;
-        Set<String> emails = comments.stream()
-                .map(comment -> comment.getEmail())
-                .collect(Collectors.toSet());
-        String emailsString = emails.stream().collect(Collectors.joining(", "));
-        return "Post #" + this.getId() + " has replies from: " + emailsString;
+
+        String emailsString = comments.stream().
+                map(Comment::getEmail).distinct().
+                collect(Collectors.joining(", "));
+
+        return "Post #" + id + " has replies from: " + emailsString;
     }
 }

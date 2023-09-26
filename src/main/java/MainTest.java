@@ -1,7 +1,5 @@
 public class MainTest {
     public static void main(String[] args) {
-        // UserTodos.getAllUsersTodos();
-        // System.out.println("All users:\t " + RESTHelper.getResponse(Utils.Utilities.Consts.JSONPlaceholder_ADDRESS + "/users"));
 
         System.out.println("For user 1:\t" + Main.getUncompletedByUser(1));
         System.out.println("For user 5:\t" + Main.getUncompletedByUser(5));

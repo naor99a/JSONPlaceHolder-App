@@ -43,7 +43,6 @@ public class Queries {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
         return users;
     }
 

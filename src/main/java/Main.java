@@ -4,7 +4,6 @@ import ResourceClasses.User;
 import Utilities.APIHelper;
 
 import Utilities.Consts;
-import Utilities.Utilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,8 +13,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
 
     // Method 1 ("Create a method that returns the summary for each user, his/her uncompleted tasks (todos)")
@@ -25,9 +22,9 @@ public class Main {
         List<String> summaries = new ArrayList<>();
         for (User user : users) {
             summaries.add(
-                    user.toString()
-                            + "\nUncompleted tasks:\n"
-                            + Queries.getUserUncompletedTasksSummary(user.getId()));
+                    user.getSummary() +
+                            "\nUncompleted tasks:\n" +
+                            Queries.getUserUncompletedTasksSummary(user.getId()));
         }
 
         return summaries;
@@ -37,18 +34,20 @@ public class Main {
     // Method 2 ("Create a method that returns the uncompleted tasks of a given user id")
     public static Collection<Todo> getUncompletedByUser(int userId) {
         // filter and return only uncompleted
-        return Queries.getTodosForUser(userId).stream()
-                .filter(todo -> !todo.isCompleted())
-                .collect(Collectors.toList());
+        return Queries.getTodosForUser(userId).
+                stream().
+                filter(todo -> !todo.isCompleted()).
+                collect(Collectors.toList());
     }
 
 
     // Method 3 ("Create a method that returns the summary for each user, the email of each replier (in a comment) per
     //            each post that the user has posted. If the post had 0 replies, do not show it.")
     public static Collection<String> getRepliersByUserPosts() {
-        return Queries.getAllUsers().stream()
-                .map(User::getPostsSummary)
-                .collect(Collectors.toList());
+        return Queries.getAllUsers().
+                stream().
+                map(User::getPostsSummary).
+                collect(Collectors.toList());
     }
 
 
@@ -66,9 +65,9 @@ public class Main {
             e.printStackTrace();
         }
 
-        return userAlbums.stream()
-                .filter(album -> ( album.size() > threshold))
-                .collect(Collectors.toList());
+        return userAlbums.stream().
+                filter(album -> ( album.size() > threshold)).
+                collect(Collectors.toList());
     }
 
     public static void main(String[] args) {

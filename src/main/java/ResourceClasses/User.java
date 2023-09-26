@@ -41,20 +41,6 @@ public class User {
         this.username = username;
     }
 
-    // todo remove
-    public Collection<Todo> getTodos() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users/" + getId() + "/todos");
-
-        List<Todo> todos = null;
-        try {
-            todos = objectMapper.readValue(jsonArrayStr, new TypeReference<List<Todo>>() {});
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return todos;
-    }
-
     public Collection<Post> getPosts() {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users/" + getId() + "/posts");
@@ -86,10 +72,5 @@ public class User {
         return "User id: " + getId() +
                 "\nName: " + getName() +
                 "\nUsername: " + getUsername();
-    }
-
-    @Override
-    public String toString() {
-        return getSummary();
     }
 }
