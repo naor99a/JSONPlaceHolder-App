@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -40,6 +41,7 @@ public class User {
         this.username = username;
     }
 
+    // todo remove
     public Collection<Todo> getTodos() {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonArrayStr = APIHelper.getResponse(Consts.JSONPlaceholder_ADDRESS + "/users/" + getId() + "/todos");
@@ -67,14 +69,16 @@ public class User {
     }
 
     public String getPostsSummary() {
-
         Collection<Post> userPosts = getPosts();
-        Collection<String> postsSummaries = userPosts.stream()
-                .map(post -> post.getPostRepliersSummary()).
-                filter(summary -> summary != null).
+
+        Collection<String> postsSummaries = userPosts.stream().
+                map(Post::getPostRepliersSummary).
+                filter(Objects::nonNull).
                 collect(Collectors.toList());
-        String postsSummariesString = postsSummaries.stream().collect(Collectors.joining("\n"));
-         return "User #" + getId() + " posted " + userPosts.size() + " posts." +
+
+        String postsSummariesString = String.join("\n", postsSummaries);
+
+        return "User #" + getId() + " posted " + userPosts.size() + " posts." +
                 "\nHere are the emails of the repliers to each post:\n" + postsSummariesString;
     }
 
