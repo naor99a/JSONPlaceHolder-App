@@ -1,3 +1,3 @@
 # JSONPlaceHolder-App
 
-Main.java contains the requested methods.
+src/main/java/Main.java contains the requested methods.
