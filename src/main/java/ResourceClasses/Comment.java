@@ -1,5 +1,8 @@
 package ResourceClasses;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
     private int postId;
     private int id;
